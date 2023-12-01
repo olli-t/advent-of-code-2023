@@ -6,8 +6,7 @@ pub fn part_one(input: &str) -> Option<u32> {
     let lines = input.lines();
     let mut sum: u32 = 0;
     for line in lines {
-        let mut vec: Vec<u32> = Vec::new();
-        get_vec_with_numbers(line, &mut vec);
+        let vec = get_vec_with_numbers(line);
 
         sum += vec[0] * 10 + vec[vec.len() - 1];
     }
@@ -24,7 +23,6 @@ pub fn part_two(input: &str) -> Option<u32> {
     }
 
     for line in lines {
-        let mut vec: Vec<u32> = Vec::new();
         let mut new_line = String::from(line);
         let mut change_str: Vec<(usize, &str)> = Vec::new();
         for number_word in arr {
@@ -36,18 +34,15 @@ pub fn part_two(input: &str) -> Option<u32> {
         for (corr, (i, num)) in change_str.iter().enumerate() {
             new_line.insert_str(*i + corr, num);
         }
-        get_vec_with_numbers(&new_line, &mut vec);
+
+        let vec = get_vec_with_numbers(&new_line);
         sum += vec[0] * 10 + vec[vec.len() - 1];
     }
     Some(sum)
 }
 
-fn get_vec_with_numbers(line: &str, vec: &mut Vec<u32>) {
-    for num in line.chars().map(|s| s.to_digit(10)) {
-        if num.is_some() {
-            vec.push(num.unwrap());
-        }
-    }
+fn get_vec_with_numbers(line: &str) -> Vec<u32> {
+    line.chars().flat_map(|s| s.to_digit(10)).collect()
 }
 
 #[cfg(test)]

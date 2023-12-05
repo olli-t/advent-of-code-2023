@@ -37,12 +37,11 @@ pub fn part_one(input: &str) -> Option<u32> {
 }
 
 fn get_ok_index(index: usize, direction: char, dim_y: usize, dim_x: usize, operator: char) -> Result<usize, ()> {
-    let mut max: usize = 0;
-    match direction {
-        'y' => { max = dim_y - 1 }
-        'x' => { max = dim_x - 1 }
+    let max: usize = match direction {
+        'y' => { dim_y - 1 }
+        'x' => { dim_x - 1 }
         _ => return Err(()),
-    }
+    };
     let return_index = match operator {
         '+' => {
             if index == max {

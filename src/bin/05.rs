@@ -9,7 +9,7 @@ pub struct Transform {
 impl Transform {
     pub fn transform(&self, v: &u64) -> Result<u64, ()> {
         if (self.start..self.start + self.length).contains(&v) {
-            Ok(((*v as i64) + (self.destination as i64) - (self.start as i64)) as u64)
+            Ok((*v) + (self.destination) - (self.start))
         } else {
             Err(())
         }
@@ -41,7 +41,6 @@ impl Map {
         }
         new_seeds
     }
-
 }
 
 pub fn part_one(input: &str) -> Option<u64> {
@@ -63,9 +62,8 @@ pub fn part_one(input: &str) -> Option<u64> {
             });
         }
     }
-    for map in maps{
+    for map in maps {
         seeds = map.apply_on_seeds(seeds);
-
     }
 
 
@@ -73,7 +71,6 @@ pub fn part_one(input: &str) -> Option<u64> {
 }
 
 pub fn part_two(input: &str) -> Option<u64> {
-
     let mut seed_ranges: Vec<u64> = Vec::new();
     let mut maps: Vec<Map> = Vec::new();
     for line in input.lines() {
@@ -92,21 +89,19 @@ pub fn part_two(input: &str) -> Option<u64> {
             });
         }
     }
-    let mut seeds= Vec::new();
-    for i in (0..seed_ranges.len()).step_by(2){
-        for seed in seed_ranges[i]..seed_ranges[i] + seed_ranges[i+1] {
+    let mut seeds = Vec::new();
+    for i in (0..seed_ranges.len()).step_by(2) {
+        for seed in seed_ranges[i]..seed_ranges[i] + seed_ranges[i + 1] {
             seeds.push(seed)
         }
     }
 
-    for map in maps{
+    for map in maps {
         seeds = map.apply_on_seeds(seeds);
-
     }
 
 
     Some(*seeds.iter().min().unwrap())
-
 }
 
 #[cfg(test)]

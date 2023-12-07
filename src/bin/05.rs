@@ -8,7 +8,7 @@ pub struct Transform {
 
 impl Transform {
     pub fn transform(&self, v: &u64) -> Result<u64, ()> {
-        if (self.start..self.start + self.length).contains(&v) {
+        if (self.start..self.start + self.length).contains(v) {
             Ok((*v) + (self.destination) - (self.start))
         } else {
             Err(())

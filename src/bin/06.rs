@@ -4,10 +4,10 @@ advent_of_code::solution!(6);
 pub fn part_one(input: &str) -> Option<u64> {
     let lines = input.lines().collect::<Vec<&str>>();
     let re = Regex::new(r"\d+").unwrap();
-    let times: Vec<u64> = re.find_iter(lines[0]).map(|n| n.as_str().parse().unwrap()).into_iter().collect();
-    let distances: Vec<u64> = re.find_iter(lines[1]).map(|n| n.as_str().parse().unwrap()).into_iter().collect();
+    let times: Vec<u64> = re.find_iter(lines[0]).map(|n| n.as_str().parse().unwrap()).collect();
+    let distances: Vec<u64> = re.find_iter(lines[1]).map(|n| n.as_str().parse().unwrap()).collect();
 
-    return get_possible_wins(times, distances)
+    get_possible_wins(times, distances)
 }
 
 fn get_possible_wins(times: Vec<u64>, distances: Vec<u64>) -> Option<u64> {
@@ -19,7 +19,7 @@ fn get_possible_wins(times: Vec<u64>, distances: Vec<u64>) -> Option<u64> {
         let right_term: f64 = ((time / 2.0).powi(2) - distance).sqrt();
         let left_border = (left_term - right_term).floor();
         let right_border = (left_term + right_term).ceil() - 1.0;
-        possible_wins *= (left_border as i64 - right_border as i64).abs() as u64;
+        possible_wins *= (left_border as i64 - right_border as i64).unsigned_abs();
     }
 
     Some(possible_wins)
@@ -28,10 +28,10 @@ fn get_possible_wins(times: Vec<u64>, distances: Vec<u64>) -> Option<u64> {
 pub fn part_two(input: &str) -> Option<u64> {
     let lines = input.lines().collect::<Vec<&str>>();
     let re = Regex::new(r"\d+").unwrap();
-    let times: Vec<u64> = re.find_iter(&*lines[0].replace(' ', "")).map(|n| n.as_str().parse().unwrap()).into_iter().collect();
-    let distances: Vec<u64> = re.find_iter(&*lines[1].replace(' ', "")).map(|n| n.as_str().parse().unwrap()).into_iter().collect();
+    let times: Vec<u64> = re.find_iter(&lines[0].replace(' ', "")).map(|n| n.as_str().parse().unwrap()).collect();
+    let distances: Vec<u64> = re.find_iter(&lines[1].replace(' ', "")).map(|n| n.as_str().parse().unwrap()).collect();
 
-    return get_possible_wins(times, distances)
+    get_possible_wins(times, distances)
 }
 
 #[cfg(test)]

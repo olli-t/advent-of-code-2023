@@ -178,15 +178,11 @@ pub fn part_two(input: &str) -> Option<u32> {
             overall_strength: None,
             bid: (whitespace[1].parse().unwrap()),
         };
-        if line == "AAAJJ 226" {
-            println!("STOP");
-        }
         new_hand.calculate_hand_2();
         all_hands.push(new_hand)
     }
 
     all_hands.sort_by_key(|h| h.overall_strength);
-    println!("STOP");
     Some(
         all_hands
             .iter()

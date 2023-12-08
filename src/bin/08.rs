@@ -74,7 +74,6 @@ pub fn part_two(input: &str) -> Option<u64> {
 
     let mut steps: u64 = 0;
     let mut looparounds: Vec<Option<u64>> = starting_nodes.iter().map(|_| None).collect();
-    let mut loops: Vec<Option<u64>> = looparounds.clone();
     'outer: loop {
         for ch in &directions {
             starting_nodes = starting_nodes
@@ -96,22 +95,16 @@ pub fn part_two(input: &str) -> Option<u64> {
                 if node.ends_with('Z') {
                     if looparounds[i].is_none() {
                         looparounds[i] = Some(steps);
-                    } else {
-                        if loops[i].is_none() {
-                            loops[i] = Some(steps - looparounds[i].unwrap());
-                            if loops.iter().all(|e| e.is_some()) {
-                                break 'outer;
-                            }
+                        if looparounds.iter().all(|e| e.is_some()) {
+                            break 'outer;
                         }
                     }
                 }
             }
         }
     }
-    println!("{looparounds:?}");
-
     let mut lcm_calculated: u64 = 1;
-    for loop_ in loops {
+    for loop_ in looparounds {
         lcm_calculated = lcm(lcm_calculated, loop_.unwrap());
     }
     Some(lcm_calculated)

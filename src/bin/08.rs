@@ -92,12 +92,10 @@ pub fn part_two(input: &str) -> Option<u64> {
 
             steps += 1;
             for (i, node) in starting_nodes.iter().enumerate() {
-                if node.ends_with('Z') {
-                    if looparounds[i].is_none() {
-                        looparounds[i] = Some(steps);
-                        if looparounds.iter().all(|e| e.is_some()) {
-                            break 'outer;
-                        }
+                if node.ends_with('Z') && looparounds[i].is_none() {
+                    looparounds[i] = Some(steps);
+                    if looparounds.iter().all(|e| e.is_some()) {
+                        break 'outer;
                     }
                 }
             }

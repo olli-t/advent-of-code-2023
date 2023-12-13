@@ -19,16 +19,15 @@ pub fn part_one(input: &str) -> Option<u32> {
         let max_x = matrix[0].len();
 
         for y in 1..max_y {
-            if matrix[y - 1] == matrix[y] {
-                if matrix[0..y]
+            if matrix[y - 1] == matrix[y]
+                && matrix[0..y]
                     .iter()
                     .rev()
                     .zip(matrix[y..max_y].iter())
                     .all(|(l, r)| l == r)
-                {
-                    sum += y as u32 * 100;
-                    continue 'matrix;
-                }
+            {
+                sum += y as u32 * 100;
+                continue 'matrix;
             }
         }
         let mut matrix_iters: Vec<_> = matrix.into_iter().map(|v| v.into_iter()).collect();
@@ -42,16 +41,15 @@ pub fn part_one(input: &str) -> Option<u32> {
             .collect();
 
         for x in 1..max_x {
-            if matrix_transposed[x - 1] == matrix_transposed[x] {
-                if matrix_transposed[0..x]
+            if matrix_transposed[x - 1] == matrix_transposed[x]
+                && matrix_transposed[0..x]
                     .iter()
                     .rev()
                     .zip(matrix_transposed[x..max_x].iter())
                     .all(|(l, r)| l == r)
-                {
-                    sum += x as u32;
-                    continue 'matrix;
-                }
+            {
+                sum += x as u32;
+                continue 'matrix;
             }
         }
     }
@@ -76,7 +74,7 @@ pub fn part_two(input: &str) -> Option<u32> {
     'matrix: for matrix in matrizes {
         let max_y = matrix.len();
         let max_x = matrix[0].len();
-        let mut smudge = 0;
+        let mut smudge: i32;
         for y in 1..max_y {
             smudge = matrix[y - 1]
                 .iter()
@@ -94,8 +92,8 @@ pub fn part_two(input: &str) -> Option<u32> {
                     sum += y as u32 * 100;
                     continue 'matrix;
                 }
-            } else if smudge == 0 {
-                if 1 == matrix[0..y - 1]
+            } else if smudge == 0
+                && 1 == matrix[0..y - 1]
                     .iter()
                     .rev()
                     .zip(matrix[y + 1..max_y].iter())
@@ -106,10 +104,9 @@ pub fn part_two(input: &str) -> Option<u32> {
                             .sum::<i32>()
                     })
                     .sum()
-                {
-                    sum += y as u32 * 100;
-                    continue 'matrix;
-                }
+            {
+                sum += y as u32 * 100;
+                continue 'matrix;
             }
         }
         let mut matrix_iters: Vec<_> = matrix.into_iter().map(|v| v.into_iter()).collect();
@@ -139,8 +136,8 @@ pub fn part_two(input: &str) -> Option<u32> {
                     sum += x as u32;
                     continue 'matrix;
                 }
-            } else if smudge == 0 {
-                if 1 == matrix[0..x - 1]
+            } else if smudge == 0
+                && 1 == matrix[0..x - 1]
                     .iter()
                     .rev()
                     .zip(matrix[x + 1..max_x].iter())
@@ -151,10 +148,9 @@ pub fn part_two(input: &str) -> Option<u32> {
                             .sum::<i32>()
                     })
                     .sum()
-                {
-                    sum += x as u32;
-                    continue 'matrix;
-                }
+            {
+                sum += x as u32;
+                continue 'matrix;
             }
         }
     }
